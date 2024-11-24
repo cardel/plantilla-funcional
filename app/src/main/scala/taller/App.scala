@@ -98,7 +98,7 @@ object App {
         val n = m1.length
 
         if (n == 1) {
-            Vector(Vector(m1(0)(0) * m2(s0)(0)))
+            Vector(Vector(m1(0)(0) * m2(0)(0)))
         } else {
             val mitad = n / 2
 
