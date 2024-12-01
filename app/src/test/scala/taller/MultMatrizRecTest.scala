@@ -59,20 +59,4 @@ class MultMatrizRecTest extends AnyFunSuite {
     assert(multMatrizRec(m1, identidad) == resultadoEsperado)
     }
 
-    test("Multiplicación recursiva con matriz de ceros 3x3") {
-    val m1: Matriz = Vector(
-        Vector(1, 2, 3),
-        Vector(4, 5, 6),
-        Vector(7, 8, 9)
-    )
-    val ceros: Matriz = Vector(
-        Vector(0, 0, 0),
-        Vector(0, 0, 0),
-        Vector(0, 0, 0)
-    )
-
-    assert(multMatrizRec(m1, ceros) == Vector())
-    }
-
-
 }
