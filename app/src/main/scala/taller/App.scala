@@ -4,6 +4,8 @@
 package taller
 import org.scalameter._
 import scala.util.Random
+import scala.collection.parallel.CollectionConverters.ImmutableIterableIsParallelizable
+import scala.collection.parallel.immutable._
 
 object App {
   def main(args: Array[String]): Unit = {
@@ -12,7 +14,6 @@ object App {
     val RiegoOptimo = new RiegoOptimo()
 
     val longitud_fincas = 10
-
     /*for (i <- 1 to longitud_fincas){
       val f = RiegoOptimo.fincaAlAzar(i);
       val d = RiegoOptimo.distanciaAlAzar(i)
