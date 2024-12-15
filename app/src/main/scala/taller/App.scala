@@ -10,27 +10,19 @@ object App {
     println(greeting())
 
     val RiegoOptimo = new RiegoOptimo()
+
     val longitud_fincas = 10
 
-    for (i: Int <- 1 to longitud_fincas by 2) yield {
-
-      val finca_creada = RiegoOptimo.fincaAlAzar(i)
-      val prog_riego = RiegoOptimo.generarProgramacionesRiego(finca_creada)
-
-      val programacion_aleatoria = prog_riego(Random.nextInt(prog_riego.length))
-      println("Programación elegida para finca de tamaño " + (i) + " = " + programacion_aleatoria)
-
-      val timeSeq = measure {
-        RiegoOptimo.costoRiegoFinca(finca_creada, programacion_aleatoria)
-      }
-      val timePar = measure {
-        RiegoOptimo.costoRiegoFincaPar(finca_creada, programacion_aleatoria)
-      }
-      println(s"Secuencial: $timeSeq ms")
-      println(s"Paralelo: $timePar ms")
-    }
-
-
+    println("\\begin{center}\n\\begin{tabular}{ |c|c|c| } \n\\hline")
+    for (i <- 1 to longitud_fincas){
+      val f = RiegoOptimo.fincaAlAzar(i);
+      val d = RiegoOptimo.distanciaAlAzar(i)
+      val timeSeq = withWarmer(new Warmer.Default) measure { RiegoOptimo.generarProgramacionesRiego(f) }
+      val timePar = withWarmer(new Warmer.Default) measure { RiegoOptimo.generarProgramacionesRiegoPar(f) }
+      val ratio = timeSeq.value / timePar.value
+      println(s"$timeSeq & $timePar & $ratio & $i")
+    } 
+    println("\\hline\n\\end{tabular}\n\\end{center}")
   }
 
   def greeting(): String = "Hello, world!"
