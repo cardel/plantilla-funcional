@@ -13,7 +13,7 @@ object App {
 
     val RiegoOptimo = new RiegoOptimo()
 
-    val longitud_fincas = 10
+    val longitud_fincas = 11
     /*for (i <- 1 to longitud_fincas){
       val f = RiegoOptimo.fincaAlAzar(i);
       val d = RiegoOptimo.distanciaAlAzar(i)
