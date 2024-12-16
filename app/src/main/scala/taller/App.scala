@@ -4,16 +4,40 @@
 package taller
 import org.scalameter._
 import scala.util.Random
+import scala.collection.parallel.CollectionConverters.ImmutableIterableIsParallelizable
+import scala.collection.parallel.immutable._
 
 object App {
   def main(args: Array[String]): Unit = {
     //println(greeting())
 
     val RiegoOptimo = new RiegoOptimo()
-    val longitud_fincas = 10
 
+    val longitud_fincas = 10
+    /*for (i <- 1 to longitud_fincas){
+      val f = RiegoOptimo.fincaAlAzar(i);
+      val d = RiegoOptimo.distanciaAlAzar(i)
+      val timeSeq = withWarmer(new Warmer.Default) measure { RiegoOptimo.generarProgramacionesRiego(f) }
+      val timePar = withWarmer(new Warmer.Default) measure { RiegoOptimo.generarProgramacionesRiegoPar(f) }
+      val ratio = timeSeq.value / timePar.value
+      println(s"$timeSeq & $timePar & $ratio & $i")
+    } */
+
+    /**/
+    println(s"pruebas ejecución - costo movilidad y version paralela")
+    for (i <- 1 to longitud_fincas){
+      val f = RiegoOptimo.fincaAlAzar(i);
+      val p = RiegoOptimo.generarProgramacionesRiego(f)
+      val d = RiegoOptimo.distanciaAlAzar(i)
+      val r = RiegoOptimo.ProgramacionRiegoOptimo(f, d)
+
+      val timeSeq = withWarmer(new Warmer.Default) measure { RiegoOptimo.costoMovilidad(f,r._1,d) }
+      val timePar = withWarmer(new Warmer.Default) measure { RiegoOptimo.costoMovilidadPar(f,r._1,d) }
+      val ratio = timeSeq.value / timePar.value
+      println(s"Tiempo versión secuencial(ms)$timeSeq & Tiempo versión paralela(ms) $timePar & $ratio & longitud: $i")
+    } /**/
   //pruebas de tiempo de ejecución para CostoRiegoFinca
-    for (i: Int <- 1 to longitud_fincas by 2) yield {
+    /*for (i: Int <- 1 to longitud_fincas by 2) yield {
 
       val finca_creada = RiegoOptimo.fincaAlAzar(i)
       val prog_riego = RiegoOptimo.generarProgramacionesRiego(finca_creada)
@@ -29,10 +53,10 @@ object App {
       }
       println(s"Secuencial: $timeSeq ms")
       println(s"Paralelo: $timePar ms")
-    }
+    }*/
 
   //pruebas de tiempo de ejecución para ProgramacionRiegoOptimo
-    for(i: Int <- 1 to longitud_fincas by 2) yield {
+    /*for(i: Int <- 1 to longitud_fincas by 2) yield {
       val finca = RiegoOptimo.fincaAlAzar(i)
       val distancia = RiegoOptimo.distanciaAlAzar(i)
       val timeSeq = measure {
@@ -44,10 +68,8 @@ object App {
       println(s"prueba de tieempo de ejecucion con $i tablones:")
       println(s"Tiempo secuencial: $timeSeq ms")
       println(s"Tiempo paralelo: $timePar ms")}
+  */
   }
 
+  def greeting(): String = "Hello, world!"
 }
-
-
-//def greeting(): String = "Hello, world!"
-
